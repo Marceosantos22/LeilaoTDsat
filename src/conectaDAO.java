@@ -16,20 +16,25 @@ public class conectaDAO {
 	ResultSet rs;
 
 	public Connection getConexao() {
+		
 		return conn;
 	}
 
-	public Boolean connectDB() {
+	public boolean connectDB() {
 
 		try {
-
+			
+			Class.forName("com.mysql.cj.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/uc11",
 					  "root", "F17101818@");
 
 			return true;
 
-		} catch (SQLException erro) {
-			JOptionPane.showMessageDialog(null, "Erro ConectaDAO" + erro.getMessage());
+		} catch (SQLException  | ClassNotFoundException ex) {
+			
+				System.out.println("Erro ConectaDAO " + ex.getMessage());
+			
+			//JOptionPane.showMessageDialog(null, "Erro ConectaDAO" + erro.getMessage());
 			return false;
 		}
 
@@ -42,6 +47,7 @@ public class conectaDAO {
 			conn.close();
 
 		} catch (Exception e) {
+			
 		}
 
 	}

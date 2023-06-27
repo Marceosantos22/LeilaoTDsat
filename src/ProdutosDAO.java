@@ -30,11 +30,13 @@ public class ProdutosDAO {
 
 			conexao.connectDB();
 			Connection conn = conexao.getConexao();
+			
 			PreparedStatement st = conn.prepareStatement("INSERT INTO produtos"
-					  + " (nome, valor) VALUES (?, ?) ");
+					  + " (nome, valor, status) VALUES (?,?,?)");
 
 			st.setString(1, produto.getNome());
 			st.setInt(2, produto.getValor());
+			st.setString(3, produto.getStatus());
 
 			int status = st.executeUpdate();
 			st.close();
@@ -44,6 +46,8 @@ public class ProdutosDAO {
 
 		} catch (Exception e) {
 
+			System.out.println("Erro ao conectar: " + e.getMessage());
+			
 			return false;
 			
 		}
