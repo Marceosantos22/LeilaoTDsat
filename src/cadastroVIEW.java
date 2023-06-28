@@ -187,6 +187,9 @@ public class cadastroVIEW extends javax.swing.JFrame {
    private javax.swing.JTextField txtCadastroValor;
    // End of variables declaration//GEN-END:variables
 
+	/**
+	 * Método para cadastrar (salvar) no bando de dados os imput adicionado pelo usuário.
+	 */
 	public void cadastrar() {
 
 		int resposta;
@@ -218,7 +221,9 @@ public class cadastroVIEW extends javax.swing.JFrame {
 		}
 
 	}
-
+	/**
+	 * Método para limpar os campos digitados pelo usuário.
+	 */
 	public void limpardados() {
 
 		txtCadastroNome.setText("");
