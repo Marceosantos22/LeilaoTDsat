@@ -25,7 +25,6 @@ public class ProdutosDAO {
 
 	}
 
-
 	public boolean cadastrarProduto(ProdutosDTO produto) {
 
 		try {
@@ -58,42 +57,70 @@ public class ProdutosDAO {
 
 	public ArrayList<ProdutosDTO> listarProdutos() {
 
-		//String sql = "SELECT * FROM produtos";
-
+		String sql = "SELECT * FROM produtos";
+		
 		try {
 
 			conexao.connectDB();
 			Connection conn = conexao.getConexao();
 
-			PreparedStatement st = conn.prepareStatement("SELECT * FROM produtos");
+			PreparedStatement st = conn.prepareStatement(sql);
 			ResultSet rs = st.executeQuery();
 
-			 listagem.clear();
+			listagem.clear();
 
-			while (rs.next()){
-			
+			while (rs.next()) {
 
 				ProdutosDTO produto = new ProdutosDTO();
 
 				produto.setId(rs.getInt("id"));
 				produto.setNome(rs.getString("nome"));
-				produto.setStatus(rs.getString("status"));
 				produto.setValor(rs.getInt("valor"));
+				produto.setStatus(rs.getString("status"));
 
 				listagem.add(produto);
 			}
-			
-		
-			st.close();			
+
+			st.close();
 			conexao.desconectarDB();
 			return listagem;
-			
 
 		} catch (SQLException ex) {
 
 			System.out.println("Erro ao pesquisar: " + ex.getMessage());
 
 			return null;
+		}
+
+	}
+
+	public int venderProduto( int id) {
+
+		int status;
+		
+
+		try {
+
+			conexao.connectDB();
+			Connection conn = conexao.getConexao();
+
+			String produtovendido = "Vendido";
+
+			PreparedStatement st = conn.prepareStatement("UPDATE produtos SET status =? WHERE id =? ");
+
+			st.setInt(2, id);
+			st.setString(1, produtovendido);
+
+			status = st.executeUpdate();
+
+			return status;
+
+		} catch (SQLException ex) {
+
+			System.out.println(ex.getErrorCode());
+
+			return ex.getErrorCode();
+
 		}
 
 	}
